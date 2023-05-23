@@ -19,6 +19,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
   OpenController openController = Get.put(OpenController());
+  // int _selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
     TabController _tabcontroller = TabController(length: 4, vsync: this);
@@ -174,18 +175,34 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
                                           Spacer(),
                                           IconButton(
                                             onPressed: () {
-                                              Get.to(TopMusicDetil(
-                                                openController.openmodel!.tracks
-                                                    .data![index].title
-                                                    .toString(),
-                                              ));
+                                              Get.to(TopmusicDetil(
+                                                  openController.openmodel!
+                                                      .tracks.data![index].title
+                                                      .toString(),
+                                                  openController
+                                                      .openmodel!
+                                                      .tracks
+                                                      .data![index]
+                                                      .artist
+                                                      .name,
+                                                  openController
+                                                      .openmodel!
+                                                      .tracks
+                                                      .data![index]
+                                                      .album
+                                                      .coverBig,
+                                                  openController
+                                                      .openmodel!
+                                                      .tracks
+                                                      .data![index]
+                                                      .preview));
                                             },
                                             icon: Icon(
                                               Icons.play_circle_fill,
                                               color: Colors.white,
                                               size: 50,
                                             ),
-                                          )
+                                          ),
                                         ],
                                       ),
                                     ),
@@ -267,81 +284,99 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
                       ListView.separated(
                         itemCount: openController.albummodel?.nbTracks ?? 0,
                         itemBuilder: (BuildContext context, index) {
-                          return Container(
-                              height: 80,
-                              color: Color(0xFF2d2e37),
-                              child: Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: Row(
-                                  children: <Widget>[
-                                    Container(
-                                      height: 80,
-                                      width: 80,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
+                          return GestureDetector(
+                            onTap: () {
+                              Get.to(TopmusicDetil(
+                                  openController
+                                      .albummodel!.tracks.data![index].title,
+                                  openController.albummodel!.tracks.data![index]
+                                      .artist.name,
+                                  openController.albummodel!.tracks.data![index]
+                                      .album.cover,
+                                  openController.albummodel!.tracks.data![index]
+                                      .preview));
+                            },
+                            child: Container(
+                                height: 80,
+                                color: Color(0xFF2d2e37),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Row(
+                                    children: <Widget>[
+                                      Container(
+                                        height: 80,
+                                        width: 80,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          //color: Colors.amber,
+                                          image: DecorationImage(
+                                            image: NetworkImage(openController
+                                                .albummodel!
+                                                .tracks
+                                                .data![index]
+                                                .album
+                                                .cover),
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
                                         //color: Colors.amber,
-                                        image: DecorationImage(
-                                          image: NetworkImage(openController
-                                              .albummodel!
-                                              .tracks
-                                              .data![index]
-                                              .album
-                                              .cover),
-                                          fit: BoxFit.cover,
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Expanded(
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(5.0),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                openController
+                                                        .albummodel
+                                                        ?.tracks
+                                                        .data![index]
+                                                        .title ??
+                                                    "no data",
+                                                softWrap: false,
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontFamily: "Poppins",
+                                                    fontWeight:
+                                                        FontWeight.normal,
+                                                    fontSize: 18),
+                                              ),
+                                              Text(
+                                                openController
+                                                        .albummodel
+                                                        ?.tracks
+                                                        .data![index]
+                                                        .artist
+                                                        .name ??
+                                                    "no data",
+                                                softWrap: false,
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: TextStyle(
+                                                    color: Colors.grey,
+                                                    fontFamily: "Rubik"),
+                                              )
+                                            ],
+                                          ),
                                         ),
                                       ),
-                                      //color: Colors.amber,
-                                    ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Expanded(
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(5.0),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              openController.albummodel?.tracks
-                                                      .data![index].title ??
-                                                  "no data",
-                                              softWrap: false,
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontFamily: "Poppins",
-                                                  fontWeight: FontWeight.normal,
-                                                  fontSize: 18),
-                                            ),
-                                            Text(
-                                              openController
-                                                      .albummodel
-                                                      ?.tracks
-                                                      .data![index]
-                                                      .artist
-                                                      .name ??
-                                                  "no data",
-                                              softWrap: false,
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: TextStyle(
-                                                  color: Colors.grey,
-                                                  fontFamily: "Rubik"),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    Spacer(),
-                                    Icon(
-                                      Icons.favorite,
-                                      color: Colors.white,
-                                    )
-                                  ],
-                                ),
-                              ));
+                                      Spacer(),
+                                      Icon(
+                                        Icons.favorite,
+                                        color: Colors.white,
+                                      )
+                                    ],
+                                  ),
+                                )),
+                          );
                         },
                         separatorBuilder: (BuildContext context, int index) =>
                             const Divider(),
@@ -354,6 +389,22 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
                 ],
               ),
             )),
+      // bottomNavigationBar: BottomNavigationBar(
+      //     items: <BottomNavigationBarItem>[
+      //       BottomNavigationBarItem(icon: Icon(Icons.home)),
+      //       BottomNavigationBarItem(icon: Icon(Icons.favorite)),
+      //       BottomNavigationBarItem(icon: Icon(Icons.person))
+      //     ],
+      //     type: BottomNavigationBarType.shifting,
+      //     currentIndex: _selectedIndex,
+      //     selectedItemColor: Colors.black,
+      //     iconSize: 40,
+      //     onTap: (value) {
+      //       setState(() {
+      //         _selectedIndex = value;
+      //       });
+      //     },
+      //     elevation: 5),
     );
   }
 }
