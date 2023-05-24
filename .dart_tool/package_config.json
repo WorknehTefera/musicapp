@@ -110,6 +110,18 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "floating_bottom_navigation_bar",
+      "rootUri": "file:///C:/Users/user/AppData/Local/Pub/Cache/hosted/pub.dev/floating_bottom_navigation_bar-1.5.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "floating_navbar",
+      "rootUri": "file:///C:/Users/user/AppData/Local/Pub/Cache/hosted/pub.dev/floating_navbar-2.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "flutter",
       "rootUri": "file:///C:/Users/user/Downloads/flutter_windows_3.7.3-stable/flutter/packages/flutter",
       "packageUri": "lib/",
@@ -326,7 +338,7 @@
       "languageVersion": "2.19"
     }
   ],
-  "generated": "2023-05-23T07:34:45.432453Z",
+  "generated": "2023-05-24T08:13:54.686910Z",
   "generator": "pub",
   "generatorVersion": "3.1.0-63.1.beta"
 }
