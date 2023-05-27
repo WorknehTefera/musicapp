@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.musicapps.app-mergeDebugResources-11:/values-night-v8/values-night-v8.xml",
+            "outputFile": "com.example.musicapps.app-mergeDebugResources-12:/values-night-v8/values-night-v8.xml",
             "map": [
                 {
                     "source": "D:\\Flutter project\\musicapps\\android\\app\\src\\main\\res\\values-night\\styles.xml",

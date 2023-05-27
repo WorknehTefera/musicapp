@@ -3,6 +3,8 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:musicapps/model/artistmodel.dart';
+import 'package:musicapps/model/searchmodel.dart';
 
 import '../model/albummodel.dart';
 import '../model/topchartmodel.dart';
@@ -13,24 +15,36 @@ class OpenController extends GetxController {
   var isloading = false.obs;
   Model? openmodel;
   AlbumModel? albummodel;
+  //SearchModel? searchmodel;
+  ArtistModel? artistmodel1;
   @override
   Future<void> onInit() async {
     super.onInit();
     fetchData();
+    //searchData();
   }
 
   fetchData() async {
     try {
+      // var searchdata = 'digital love';
       isloading(true);
       var response = await http.get(Uri.parse("https://api.deezer.com/chart"));
       var albumlist =
           await http.get(Uri.parse("https://api.deezer.com/album/302127"));
-      if (response.statusCode == 200) {
+      var artistlist1 =
+          await http.get(Uri.parse("https://api.deezer.com/artist/27/albums"));
+      if (response.statusCode == 200 ||
+          albumlist.statusCode == 200 ||
+          artistlist1.statusCode == 200) {
         var result = jsonDecode(response.body);
         var result2 = jsonDecode(albumlist.body);
-        print(albumlist.body);
+        var artistresult = jsonDecode(artistlist1.body);
+
         albummodel = AlbumModel.fromMap(result2);
         openmodel = Model.fromMap(result);
+        artistmodel1 = ArtistModel.fromMap(artistresult);
+        // searchmodel = SearchModel.fromMap(searchresult);
+        //print(searchmodel!.total.toString());
         // openmodel = Model.fromJson(result);
       } else {
         print("feticng error");

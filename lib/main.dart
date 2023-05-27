@@ -1,10 +1,13 @@
 //import 'package:buttons_tabbar/buttons_tabbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:musicapps/view/bottomnavigation.dart';
+import 'package:musicapps/view/listoftracklist.dart';
 import 'package:musicapps/view/topmusic.dart';
 
 import 'controller/topchartcontroller.dart';
+import 'view/searchview.dart';
 //import 'package:musicapps/test1.dart';
 
 void main() {
@@ -21,6 +24,10 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
   OpenController openController = Get.put(OpenController());
+  //final storage = const FlutterSecureStorage();
+  var _searcheddata;
+  //final String _searcheddata = "";
+  TextEditingController searchTextcontroller = TextEditingController();
   // int _selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
@@ -48,6 +55,8 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
                         child: Padding(
                           padding: const EdgeInsets.only(left: 20),
                           child: TextField(
+                            autofocus: false,
+                            controller: searchTextcontroller,
                             style: TextStyle(color: Colors.white),
                             cursorColor: Colors.white,
                             decoration: const InputDecoration(
@@ -63,9 +72,16 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
                                   fontSize: 18),
                               border: InputBorder.none,
                             ),
-                            onChanged: (value) {
-                              // Perform search functionality here
+                            onTap: () {
+                              Get.to(SearchViewData());
                             },
+                            // onChanged: (value) async {
+                            //   Get.to(SearchViewData());
+                            //   // await storage.write(
+                            //   //     key: _searcheddata, value: value);
+                            //   //print(value);
+                            //   // Perform search functionality here
+                            // },
                           ),
                         ),
                       ),
@@ -250,13 +266,13 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
                           ),
                           tabs: [
                             Tab(
-                              text: "Album",
-                            ),
-                            Tab(
-                              text: "Album",
-                            ),
-                            Tab(
                               text: "Artist",
+                            ),
+                            Tab(
+                              text: "Album",
+                            ),
+                            Tab(
+                              text: "Play List",
                             ),
                             Tab(
                               text: "Radio",
@@ -275,6 +291,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
                   child: TabBarView(
                     controller: _tabcontroller,
                     children: [
+                      ListOfArtist(),
                       ListView.separated(
                         itemCount: openController.albummodel?.nbTracks ?? 0,
                         itemBuilder: (BuildContext context, index) {
@@ -375,7 +392,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
                         separatorBuilder: (BuildContext context, int index) =>
                             const Divider(),
                       ),
-                      Text("album"),
+                      // Text("album"),
                       Text("artist"),
                       Text("radio"),
                     ],
@@ -388,5 +405,97 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
             ),
           ),
         ));
+  }
+
+  ListOfArtist() {
+    return ListView.separated(
+      itemCount: openController.artistmodel1?.data.length ?? 0,
+      itemBuilder: (BuildContext context, index) {
+        return GestureDetector(
+          onTap: () {
+            Get.to(ListOfTrackList(
+              openController.artistmodel1!.data[index].tracklist,
+            ));
+          },
+          //   Get.to(TopmusicDetil(
+          //       openController.albummodel!.tracks.data![index].title,
+          //       openController.albummodel!.tracks.data![index].artist.name,
+          //       openController.albummodel!.tracks.data![index].album.cover,
+          //       openController.albummodel!.tracks.data![index].preview));
+          // },
+          child: Container(
+              height: 80,
+              color: Color(0xFF2d2e37),
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Row(
+                  children: <Widget>[
+                    Container(
+                      height: 80,
+                      width: 80,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        //color: Colors.amber,
+                        image: DecorationImage(
+                          image: NetworkImage(openController
+                              .artistmodel1!.data[index].coverBig),
+                          //  .albummodel!.tracks.data![index].album.cover),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      //color: Colors.amber,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              openController.artistmodel1?.data[index].title ??
+                                  // .albummodel?.tracks.data![index].title ??
+                                  "no data",
+                              softWrap: false,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: "Poppins",
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 18),
+                            ),
+                            Text(
+                              "daft Punk",
+                              //openController.artistmodel1?.data[index].
+                              // openController.artistmodel1.data[index].
+                              //"daft Punk",
+                              //openController.albummodel?.tracks.data[index]
+                              //      .artist.name ??
+                              // "no data",
+                              softWrap: false,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                  color: Colors.grey, fontFamily: "Rubik"),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                    Spacer(),
+                    Icon(
+                      Icons.favorite,
+                      color: Colors.white,
+                    )
+                  ],
+                ),
+              )),
+        );
+      },
+      separatorBuilder: (BuildContext context, int index) => const Divider(),
+    );
   }
 }

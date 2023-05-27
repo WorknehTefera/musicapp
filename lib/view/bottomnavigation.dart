@@ -20,6 +20,7 @@ class BottomNavigationBarPart extends StatefulWidget {
 class _BottomNavigationBarPartState extends State<BottomNavigationBarPart> {
   // int _index = 0;
   OpenController openController = Get.put(OpenController());
+
   @override
   Widget build(BuildContext context) {
     return Obx(
