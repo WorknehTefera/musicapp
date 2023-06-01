@@ -28,6 +28,7 @@ class _TopmusicDetilState extends State<TopmusicDetil> {
     //  await player.setSource(AssetSource("music.mp3"));
 
     duration = await player.getDuration();
+    await player.resume();
   }
 
   void initState() {

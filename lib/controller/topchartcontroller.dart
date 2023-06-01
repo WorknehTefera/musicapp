@@ -1,9 +1,11 @@
 import 'dart:convert';
 //import 'dart:io';
 
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:musicapps/model/artistmodel.dart';
+import 'package:musicapps/model/listoftrackmodel.dart';
 import 'package:musicapps/model/searchmodel.dart';
 
 import '../model/albummodel.dart';
@@ -17,15 +19,22 @@ class OpenController extends GetxController {
   AlbumModel? albummodel;
   //SearchModel? searchmodel;
   ArtistModel? artistmodel1;
+  var listmusic;
+  ListofTrackModel? listoftrackmodel;
+  final storage = const FlutterSecureStorage();
   @override
   Future<void> onInit() async {
     super.onInit();
     fetchData();
+
+    ListData(listmusic);
     //searchData();
   }
 
   fetchData() async {
     try {
+      var tracklisturl = await storage.read(key: "tracklisturl");
+      print("$tracklisturl");
       // var searchdata = 'digital love';
       isloading(true);
       var response = await http.get(Uri.parse("https://api.deezer.com/chart"));
@@ -33,6 +42,7 @@ class OpenController extends GetxController {
           await http.get(Uri.parse("https://api.deezer.com/album/302127"));
       var artistlist1 =
           await http.get(Uri.parse("https://api.deezer.com/artist/27/albums"));
+
       if (response.statusCode == 200 ||
           albumlist.statusCode == 200 ||
           artistlist1.statusCode == 200) {
@@ -43,11 +53,29 @@ class OpenController extends GetxController {
         albummodel = AlbumModel.fromMap(result2);
         openmodel = Model.fromMap(result);
         artistmodel1 = ArtistModel.fromMap(artistresult);
+
         // searchmodel = SearchModel.fromMap(searchresult);
         //print(searchmodel!.total.toString());
         // openmodel = Model.fromJson(result);
       } else {
         print("feticng error");
+      }
+    } catch (e) {
+      print("error while fetching");
+    } finally {
+      isloading(false);
+    }
+  }
+
+  ListData(var listmusic) async {
+    try {
+      isloading(true);
+      var listoftrackresponse = await http.get(Uri.parse("$listmusic"));
+      print(listoftrackresponse.body);
+      if (listoftrackresponse.statusCode == 200) {
+        var listoftrackresult = jsonDecode(listoftrackresponse.body);
+        listoftrackmodel = ListofTrackModel.fromMap(listoftrackresult);
+        print(listoftrackresponse.body);
       }
     } catch (e) {
       print("error while fetching");

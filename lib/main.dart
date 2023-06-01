@@ -24,7 +24,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
   OpenController openController = Get.put(OpenController());
-  //final storage = const FlutterSecureStorage();
+  final storage = const FlutterSecureStorage();
   var _searcheddata;
   //final String _searcheddata = "";
   TextEditingController searchTextcontroller = TextEditingController();
@@ -286,7 +286,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
                 ),
                 Container(
                   width: double.maxFinite,
-                  height: 400,
+                  height: 500,
                   // color: Colors.amberAccent,
                   child: TabBarView(
                     controller: _tabcontroller,
@@ -412,10 +412,16 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
       itemCount: openController.artistmodel1?.data.length ?? 0,
       itemBuilder: (BuildContext context, index) {
         return GestureDetector(
-          onTap: () {
-            Get.to(ListOfTrackList(
+          onTap: () async {
+            openController.ListData(
               openController.artistmodel1!.data[index].tracklist,
-            ));
+            );
+            // await storage.write(
+            //     key: 'tracklisturl',
+            //     value: openController.artistmodel1!.data[index].tracklist);
+            Get.to(ListOfTrackList(
+                openController.artistmodel1!.data[index].coverBig,
+                openController.artistmodel1?.data[index].title));
           },
           //   Get.to(TopmusicDetil(
           //       openController.albummodel!.tracks.data![index].title,
