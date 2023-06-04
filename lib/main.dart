@@ -25,7 +25,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
   OpenController openController = Get.put(OpenController());
   final storage = const FlutterSecureStorage();
-  var _searcheddata;
+  //var _searcheddata;
   //final String _searcheddata = "";
   TextEditingController searchTextcontroller = TextEditingController();
   // int _selectedIndex = 0;
@@ -121,7 +121,8 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
                   child: ListView.builder(
                     // scrollDirection: Axis.horizontal,
                     scrollDirection: Axis.horizontal,
-                    itemCount: openController.openmodel?.tracks.total,
+                    itemCount:
+                        openController.openmodel?.tracks.data.length ?? 0,
                     itemBuilder: (BuildContext context, index) {
                       return Padding(
                         padding: const EdgeInsets.all(10.0),
@@ -151,7 +152,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
                                                   openController
                                                           .openmodel
                                                           ?.tracks
-                                                          .data![index]
+                                                          .data[index]
                                                           .artist
                                                           .name ??
                                                       'no name',
@@ -166,7 +167,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
                                                   openController
                                                           .openmodel
                                                           ?.tracks
-                                                          .data![index]
+                                                          .data[index]
                                                           .title ??
                                                       'no title',
                                                   softWrap: false,
@@ -184,18 +185,14 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
                                           onPressed: () {
                                             Get.to(TopmusicDetil(
                                                 openController.openmodel!.tracks
-                                                    .data![index].title
+                                                    .data[index].title
                                                     .toString(),
                                                 openController.openmodel!.tracks
-                                                    .data![index].artist.name,
-                                                openController
-                                                    .openmodel!
-                                                    .tracks
-                                                    .data![index]
-                                                    .album
-                                                    .coverBig,
+                                                    .data[index].artist.name,
                                                 openController.openmodel!.tracks
-                                                    .data![index].preview));
+                                                    .data[index].album.coverBig,
+                                                openController.openmodel!.tracks
+                                                    .data[index].preview));
                                           },
                                           icon: Icon(
                                             Icons.play_circle_fill,
@@ -299,13 +296,13 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
                             onTap: () {
                               Get.to(TopmusicDetil(
                                   openController
-                                      .albummodel!.tracks.data![index].title,
-                                  openController.albummodel!.tracks.data![index]
+                                      .albummodel!.tracks.data[index].title,
+                                  openController.albummodel!.tracks.data[index]
                                       .artist.name,
-                                  openController.albummodel!.tracks.data![index]
+                                  openController.albummodel!.tracks.data[index]
                                       .album.cover,
-                                  openController.albummodel!.tracks.data![index]
-                                      .preview));
+                                  openController
+                                      .albummodel!.tracks.data[index].preview));
                             },
                             child: Container(
                                 height: 80,
@@ -325,7 +322,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
                                             image: NetworkImage(openController
                                                 .albummodel!
                                                 .tracks
-                                                .data![index]
+                                                .data[index]
                                                 .album
                                                 .cover),
                                             fit: BoxFit.cover,
@@ -347,7 +344,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
                                                 openController
                                                         .albummodel
                                                         ?.tracks
-                                                        .data![index]
+                                                        .data[index]
                                                         .title ??
                                                     "no data",
                                                 softWrap: false,
@@ -364,7 +361,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
                                                 openController
                                                         .albummodel
                                                         ?.tracks
-                                                        .data![index]
+                                                        .data[index]
                                                         .artist
                                                         .name ??
                                                     "no data",

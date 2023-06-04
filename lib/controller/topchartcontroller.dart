@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:musicapps/model/artistmodel.dart';
 import 'package:musicapps/model/listoftrackmodel.dart';
-import 'package:musicapps/model/searchmodel.dart';
+//import 'package:musicapps/model/searchmodel.dart';
 
 import '../model/albummodel.dart';
 import '../model/topchartmodel.dart';
@@ -61,7 +61,7 @@ class OpenController extends GetxController {
         print("feticng error");
       }
     } catch (e) {
-      print("error while fetching");
+      print(e);
     } finally {
       isloading(false);
     }
@@ -71,14 +71,14 @@ class OpenController extends GetxController {
     try {
       isloading(true);
       var listoftrackresponse = await http.get(Uri.parse("$listmusic"));
-      print(listoftrackresponse.body);
+      // print(listoftrackresponse.body);
       if (listoftrackresponse.statusCode == 200) {
         var listoftrackresult = jsonDecode(listoftrackresponse.body);
         listoftrackmodel = ListofTrackModel.fromMap(listoftrackresult);
-        print(listoftrackresponse.body);
+        //print(listoftrackresponse.body);
       }
     } catch (e) {
-      print("error while fetching");
+      print(e);
     } finally {
       isloading(false);
     }

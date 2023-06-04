@@ -1,9 +1,9 @@
-import 'package:flutter/foundation.dart';
+//import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+//import 'package:flutter/widgets.dart';
+//import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart';
+//import 'package:http/http.dart';
 
 import '../controller/topchartcontroller.dart';
 
@@ -35,6 +35,44 @@ class _ListOfTrackListState extends State<ListOfTrackList> {
                 backgroundColor: Color(0xFF2d2e37),
               ),
               body: Container(
+                height: double.maxFinite,
+                width: double.maxFinite,
+                // color: Colors.white,
+                child: GridView.builder(
+                  itemCount: openController.listoftrackmodel?.data.length ?? 0,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    //maxCrossAxisExtent: 200,
+                    crossAxisCount: 3,
+                    crossAxisSpacing: 20,
+                    mainAxisSpacing: 20,
+
+                    // childAspectRatio: 0,
+                  ),
+                  itemBuilder: (BuildContext context, index) {
+                    return Container(
+                      height: 100,
+                      color: Colors.white,
+                      child: Column(
+                        children: [
+                          Container(
+                            height: 80,
+                            width: 80,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              //color: Colors.amber,
+                              image: DecorationImage(
+                                image: NetworkImage(widget.musiccover),
+                                //  .albummodel!.tracks.data![index].album.cover),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            //color: Colors.amber,
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                  /* body: Container(
                 height: double.maxFinite,
                 width: double.maxFinite,
                 // color: Colors.amber,
@@ -88,10 +126,10 @@ class _ListOfTrackListState extends State<ListOfTrackList> {
                                           MainAxisAlignment.start,
                                       children: [
                                         Text(
-                                          openController.listoftrackmodel
-                                                  ?.data[index].title ??
-                                              // .albummodel?.tracks.data![index].title ??
-                                              "no data",
+                                          openController.listoftrackmodel!
+                                              .data[index].title,
+                                          // .albummodel?.tracks.data![index].title ??
+                                          //"no data",
                                           softWrap: false,
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
@@ -132,6 +170,7 @@ class _ListOfTrackListState extends State<ListOfTrackList> {
                   },
                   separatorBuilder: (BuildContext context, int index) =>
                       const Divider(),
+                ),*/
                 ),
               ),
             ),
