@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:musicapps/view/bottomnavigation.dart';
+//import 'package:musicapps/controller/searchcontroller.dart';
 //import 'package:musicapps/controller/topchartcontroller.dart';
 
-import '../controller/searchcontroller.dart';
+//import '../controller/searchcontroller.dart';
 
 class SearchViewData extends StatefulWidget {
   const SearchViewData({super.key});
@@ -14,6 +15,7 @@ class SearchViewData extends StatefulWidget {
 }
 
 class _SearchViewDataState extends State<SearchViewData> {
+  //SearchController searchController = Get.put(SearchController());
   SearchController searchController = Get.put(SearchController());
   TextEditingController searchTextcontroller = TextEditingController();
 
