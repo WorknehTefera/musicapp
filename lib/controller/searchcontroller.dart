@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:musicapps/model/searchmodel.dart';
 
-class SearchController extends GetxController {
+class SearchControllers extends GetxController {
 //  final storage = const FlutterSecureStorage();
   var isload = false.obs;
   SearchModel? searchModel;

@@ -3,6 +3,7 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:musicapps/controller/topchartcontroller.dart';
 
 class TopmusicDetil extends StatefulWidget {
   //const TopmusicDetil({super.key});
@@ -17,6 +18,7 @@ class TopmusicDetil extends StatefulWidget {
 }
 
 class _TopmusicDetilState extends State<TopmusicDetil> {
+  OpenController openController = Get.put(OpenController());
   bool isPlaying = true;
   double value = 0;
   final player = AudioPlayer();
@@ -28,7 +30,7 @@ class _TopmusicDetilState extends State<TopmusicDetil> {
     //  await player.setSource(AssetSource("music.mp3"));
 
     duration = await player.getDuration();
-    await player.resume();
+    // await player.resume();
   }
 
   void initState() {
@@ -59,10 +61,10 @@ class _TopmusicDetilState extends State<TopmusicDetil> {
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Container(
-                height: 300,
-                width: 320,
+                height: 250,
+                width: 250,
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(360),
                     image: DecorationImage(
                         image: NetworkImage(widget.image), fit: BoxFit.cover)),
               ),
